@@ -27,10 +27,7 @@ public class SelectionSort extends AbstractSort {
      */
     @Override
     public void sort(int[] arr) {
-        
-        for(int i = 0; i < arr.length-1; i++) {
-            sort(arr, i);
-        }
+        sort(arr, 0);
     }
     
     /**
@@ -58,6 +55,11 @@ public class SelectionSort extends AbstractSort {
                 arr[i] = arr[startidx];
                 arr[startidx] = tmp;
             }
+        }
+        
+        // move the startidx up by one spot and call sort() recursively
+        if (startidx < arr.length-1) {
+            sort(arr, ++startidx);
         }
     }
     
