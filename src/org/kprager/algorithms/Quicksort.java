@@ -8,7 +8,7 @@ package org.kprager.algorithms;
  *
  * @author kyleprager
  */
-public class Quicksort {
+public class Quicksort extends AbstractSort {
 
     /**
      * @param args the command line arguments
@@ -17,8 +17,13 @@ public class Quicksort {
         Quicksort sorter = new Quicksort();
         int[] arr = {1,2,5,7,18,3,4,12,99,5};
         Utils.print(arr);
-        sorter.sort(arr, 0, arr.length-1);
+        sorter.sort(arr);
         Utils.print(arr);
+    }
+    
+    @Override
+    public void sort(int[] arr) {
+        sort(arr, 0, arr.length-1);
     }
     
     /**

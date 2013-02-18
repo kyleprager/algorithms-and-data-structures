@@ -8,7 +8,7 @@ package org.kprager.algorithms;
  *
  * @author kyleprager
  */
-public class BubbleSort {
+public class BubbleSort extends AbstractSort {
     
     public static void main(String[] args) {
         int[] arr = {123, 1, 4, 3, 6, 54, 333, 74};
@@ -22,6 +22,7 @@ public class BubbleSort {
      * This sorts an integer array using the Bubble Sort algorithm.
      * @param arr the integer array to sort
      */
+    @Override
     public void sort(int[] arr) {
         boolean swapped = false;
         int a = 0;

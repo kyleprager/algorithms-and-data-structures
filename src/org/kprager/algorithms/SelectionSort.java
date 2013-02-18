@@ -8,7 +8,7 @@ package org.kprager.algorithms;
  *
  * @author kyleprager
  */
-public class SelectionSort {
+public class SelectionSort extends AbstractSort {
     
     public static void main(String[] args) {
         int[] arr = {123, 1, 4, 3, 6, 54, 333, 74};
@@ -25,6 +25,7 @@ public class SelectionSort {
      * least 2 from the startidx passed to the other sort() function.
      * @param arr array of integers to sort
      */
+    @Override
     public void sort(int[] arr) {
         
         for(int i = 0; i < arr.length-1; i++) {

@@ -8,7 +8,7 @@ package org.kprager.algorithms;
  *
  * @author kyleprager
  */
-public class MergeSort {
+public class MergeSort extends AbstractSort {
     
     /**
      * Main function to test MergeSort
@@ -18,8 +18,13 @@ public class MergeSort {
         int[] arr = {4, 3, 67, 18, 3, 44, 123, 8};
         Utils.print(arr);
         MergeSort sorter = new MergeSort();
-        sorter.sort(arr, 0, arr.length-1);
+        sorter.sort(arr);
         Utils.print(arr);
+    }
+    
+    @Override
+    public void sort(int[] arr) {
+        sort(arr, 0, arr.length-1);
     }
     
     public void sort(int[] arr, int left, int right) {
