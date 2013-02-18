@@ -33,31 +33,34 @@ public class Quicksort extends AbstractSort {
      * @param right right index (start with <param>arr</param>.length-1)
      */
     public void sort(int[] arr, int left, int right) {
-        int i = left;
-        int j = right;
-        int pivot = arr[(left+right+1) / 2];
         
-        while (i <= j) {
-            while (arr[i] < pivot) {
-                i++;
-            }
-            while (arr[j] > pivot) {
-                j--;
-            }
-            if (i <= j) {
-                int tmp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = tmp;
-                i++;
-                j--;
-            }
-        }
-        
-        if (left < j) {
-            sort(arr, left, i-1);
-        }
-        if (right > i) {
-            sort(arr, i, right);
-        }
+      int pivotidx = (left + right + 1) / 2;
+      int pivot = arr[pivotidx];
+      
+      int i = left;
+      int j = right;
+      
+      while (i <= j) {
+          while (arr[i] < pivot) {
+              i++;
+          }
+          while (arr[j] > pivot) {
+              j--;
+          }
+          if (i <= j) {
+              int tmp = arr[i];
+              arr[i] = arr[j];
+              arr[j] = tmp;
+              i++;
+              j--;
+          }
+      }
+      
+      if (left < j) {
+          sort(arr, left, j);
+      }
+      if (right > i) {
+          sort(arr, i, right);
+      }
     }
 }
