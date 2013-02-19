@@ -24,7 +24,7 @@ public class Utils {
     
     public static void print(Node n) {
         while (n != null) {
-            System.out.print(n.value);
+            System.out.print(n.value + " ");
             n = n.next;
         }
         System.out.println();

@@ -78,7 +78,11 @@ public class LinkedLst {
         ll.print();
         ll.reverse();
         ll.print();
-        ll.insert(1, 420);
+        ll.insert(0, 13);
+        ll.insert(1, 12);
+        ll.insert(2, 11);
+        ll.insert(3, 17);
+        ll.insert(5, 18);
         ll.print();
     }
 }
