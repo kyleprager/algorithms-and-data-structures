@@ -4,10 +4,9 @@
  */
 package org.kprager.datastructures.linkedlist;
 
-import org.kprager.algorithms.Utils;
-
 /**
- *
+ * This class is purposely misspelled so it doesn't get confused
+ * with Java's LinkedList class.
  * @author kyleprager
  */
 public class LinkedLst {
