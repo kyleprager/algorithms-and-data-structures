@@ -48,12 +48,12 @@ public class Tree {
         System.out.println(tree.BFS(5));
     }
     
-    private TNode head;
+    private Node head;
     
     public void insert(int val) {
         System.out.print(val + " ");
         
-        TNode node = new TNode(val);
+        Node node = new Node(val);
         if (head == null) {
             head = node;
             return;
@@ -62,7 +62,7 @@ public class Tree {
         insert(head, node);
     }
     
-    private void insert(TNode curr, TNode node) {
+    private void insert(Node curr, Node node) {
         // if node.value < curr.value, add or recur to the left
         // otherwise add or recur to the right
         if (node.value < curr.value) {
@@ -82,7 +82,7 @@ public class Tree {
     public void printPreOrder() {
         printPreOrder(head);
     }
-    private void printPreOrder(TNode node){
+    private void printPreOrder(Node node){
         if (node == null) {
             return;
         }
@@ -94,7 +94,7 @@ public class Tree {
     public void printInOrder() {
         printInOrder(head);
     }
-    private void printInOrder(TNode node){
+    private void printInOrder(Node node){
         if (node == null) {
             return;
         }
@@ -107,7 +107,7 @@ public class Tree {
     public void printPostOrder() {
         printPostOrder(head);
     }
-    private void printPostOrder(TNode node){
+    private void printPostOrder(Node node){
         if (node == null) {
             return;
         }
@@ -120,7 +120,7 @@ public class Tree {
     public int getHeight(){
         return getHeight(head);
     }
-    public int getHeight(TNode node) {
+    public int getHeight(Node node) {
         if (node == null) {
             return 0;
         }
@@ -134,13 +134,13 @@ public class Tree {
     }
     
     public boolean DFS(int searchval) {
-        HashSet<TNode> visited = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
         
         // uses a stack (filo)
         System.out.print("DFS: ");
-        Stack<TNode> stack = new Stack<>();
+        Stack<Node> stack = new Stack<>();
         stack.add(head);
-        TNode node;
+        Node node;
         while (! stack.isEmpty()) {
             node = stack.pop();
             if (node == null  || visited.contains(node)) {
@@ -166,13 +166,13 @@ public class Tree {
         // marking visited nodes not necessary in binary tree.  but putting
         // it in to remind me that in general, for graphs, you want to mark
         // visted nodes as visited and continue if you hit a visited node
-        HashSet<TNode> visited = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
         
         // uses a queue (fifo)
         System.out.print("BFS: ");
-        Queue<TNode> q = new LinkedList<>();
+        Queue<Node> q = new LinkedList<>();
         q.add(head);
-        TNode node;
+        Node node;
         while (! q.isEmpty()) {
             node = q.poll();
             if (node == null || visited.contains(node)) {

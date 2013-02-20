@@ -8,14 +8,14 @@ package org.kprager.datastructures.tree;
  *
  * @author kyleprager
  */
-public class TNode {
-    public TNode left;
-    public TNode right;
+public class Node{
+    public Node left;
+    public Node right;
     public int value;
     
-    public TNode() {}
+    public Node() {}
     
-    public TNode(int val) {
+    public Node(int val) {
         this.value = val;
     }
 }
