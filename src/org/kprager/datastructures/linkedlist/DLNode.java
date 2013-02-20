@@ -2,18 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.kprager.datastructures;
+package org.kprager.datastructures.linkedlist;
 
 /**
  *
  * @author kyleprager
  */
-public class Node {
-    public Node next;
+public class DLNode extends Node {
+    public DLNode prev = null;
+    public DLNode next = null;
     public int value = 0;
-    
-    public Node(int val) {
-        this.value = val;
-    }
-    public Node(){}
 }

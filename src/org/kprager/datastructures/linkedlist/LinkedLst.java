@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.kprager.datastructures;
+package org.kprager.datastructures.linkedlist;
 
 import org.kprager.algorithms.Utils;
 
@@ -70,7 +70,14 @@ public class LinkedLst {
     }
     
     public void print() {
-        Utils.print(head);
+        print(head);
+    }
+    public void print(Node n) {
+        while (n != null) {
+            System.out.print(n.value + " ");
+            n = n.next;
+        }
+        System.out.println();
     }
     
     public static void main(String[] args) {
