@@ -46,6 +46,7 @@ public class Tree {
         
         System.out.println(tree.DFS(5));
         System.out.println(tree.BFS(5));
+        System.out.println(tree.isDAG());
     }
     
     private Node head;
@@ -133,34 +134,6 @@ public class Tree {
         }
     }
     
-    public boolean DFS(int searchval) {
-        HashSet<Node> visited = new HashSet<>();
-        
-        // uses a stack (filo)
-        System.out.print("DFS: ");
-        Stack<Node> stack = new Stack<>();
-        stack.add(head);
-        Node node;
-        while (! stack.isEmpty()) {
-            node = stack.pop();
-            if (node == null  || visited.contains(node)) {
-                continue;
-            }
-
-            visited.add(node);
-            System.out.print(node.value + " ");
-            
-            if (node.value == searchval) {
-                return true;
-            } else {
-                stack.push(node.right);
-                stack.push(node.left);
-            }
-        }
-        
-        return false;
-    }
-    
     public boolean BFS(int searchval) {
         
         // marking visited nodes not necessary in binary tree.  but putting
@@ -191,5 +164,60 @@ public class Tree {
         }
         
         return false;
+    }
+    
+    public boolean DFS(int searchval) {
+        HashSet<Node> visited = new HashSet<>();
+        
+        // uses a stack (filo)
+        System.out.print("DFS: ");
+        Stack<Node> stack = new Stack<>();
+        stack.add(head);
+        Node node;
+        while (! stack.isEmpty()) {
+            node = stack.pop();
+            if (node == null  || visited.contains(node)) {
+                continue;
+            }
+
+            visited.add(node);
+            System.out.print(node.value + " ");
+            
+            if (node.value == searchval) {
+                return true;
+            } else {
+                stack.push(node.right);
+                stack.push(node.left);
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean isDAG() {
+        // This version tags vertices as visited
+        // but it can also be done by saving a
+        // list of visited nodes and checking that
+        
+        // uses a stack (filo)
+        System.out.print("isDAG: ");
+        Stack<Node> stack = new Stack<>();
+        stack.add(head);
+        Node node;
+        while (! stack.isEmpty()) {
+            node = stack.pop();
+            if (node == null) {
+                continue;
+            } if (node.visited) {
+                return false;
+            }
+            node.visited = true;
+
+            System.out.print(node.value + " ");
+            stack.push(node.right);
+            stack.push(node.left);
+        }
+        
+        return true;
     }
 }
