@@ -19,4 +19,8 @@ public class Vertex {
     public Vertex(int val) {
         this.value = val;
     }
+    
+    public String toString() {
+        return value + "";
+    }
 }

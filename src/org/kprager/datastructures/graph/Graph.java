@@ -19,28 +19,38 @@ import java.util.Stack;
  */
 public class Graph {
     
+    // used to generate graph - his is handy because you can generate
+    // the same graph over and over again for testing purposes.
+    private int[][] adjacency_list = {
+            {0, 1},
+            {1,0,2,3},
+            {2,1,3},
+            {3,1,2}
+        };
+    private List<Vertex> vertices = new ArrayList<>();
+    
+    // the following are used if we want to generate our graph randomly
+    private static final int MAX_VERTICES = 100;
+    private static final int MAX_NEIGHBORS = 10;
+    private static final int MIN_NEIGHBORS = 0;
+    
     public static void main(String[] args) {
+        
         Graph graph = new Graph();
         graph.print();
         graph.DFS(5);
-        System.out.println();
         graph.BFS(5);
-        System.out.println();
+        graph.DFS(2);
+        graph.BFS(2);
         List<Vertex> vertices = graph.getVertices();
         for (int i = 0; i < vertices.size(); i++) {
             Vertex v = vertices.get(i);
             boolean b = graph.isDAG(v);
             System.out.println(b);
-            if (b) {
-                System.exit(0);
-            }
         }
     }
     
-    private List<Vertex> vertices = new ArrayList<>();
-    private static final int MAX_VERTICES = 100;
-    private static final int MAX_NEIGHBORS = 10;
-    private static final int MIN_NEIGHBORS = 0;
+    
     
     /**
      * Generates a graph represented as adjacency list.  The graph generation
@@ -48,7 +58,29 @@ public class Graph {
      */
     public Graph() {
         // generate the graph
+        generateGraph();
         
+    }
+    
+    private void generateGraph() {
+        // create all the vertices
+        for (int i = 0; i < adjacency_list.length; i++) {
+            vertices.add(new Vertex(i));
+        }
+        // add neighbors to create ajacency list
+        for (int i = 0; i < adjacency_list.length; i++) {
+            int length = adjacency_list[i].length;
+            for (int j = 0; j < length; j++) {
+                vertices.get(i).neighbors.add(vertices.get(adjacency_list[i][j]));
+            }
+        }
+    }
+    
+    /**
+     * Generate our graph randomly.  This is currently not used but you
+     * can pick which method is used in the Graph() constructor.
+     */
+    private void generateGraphRandomly() {
         // generate MAX_VERTICES number of vertices
         for (int i = 0; i < MAX_VERTICES; i++) {
             Vertex v = new Vertex(i);
@@ -86,7 +118,7 @@ public class Graph {
     
     public boolean DFS(int val) {
         int ctr = 0;
-        System.out.print("DFS: ");
+        System.out.printf("DFS (%d): ", val);
         // uses stack (filo)
         Stack<Vertex> stack = new Stack<>();
         Set<Vertex> visited = new HashSet<>(); // instead of node.visited
@@ -94,15 +126,15 @@ public class Graph {
         stack.push(vertices.get(0));
         
         while (!stack.isEmpty()) {
-            ctr++;
             Vertex v = stack.pop();
-            System.out.print(v.value + " ");
             if (visited.contains(v)) {
                 continue;
             }
+            System.out.print(v.value + " ");
             visited.add(v);
+            ctr++;
             if (v.value == val) {
-                System.out.println();
+                System.out.println(true);
                 System.out.println("Vertices traversed: " + ctr);
                 return true;
             } else {
@@ -111,13 +143,13 @@ public class Graph {
                 }
             }
         }
-        
+        System.out.println(false);
         return false;
     }
     
     public boolean BFS(int val) {
         int ctr = 0;
-        System.out.print("BFS: ");
+        System.out.printf("BFS (%d): ", val);
         // uses queue (fifo)
         Queue<Vertex> q = new LinkedList<>();
         Set<Vertex> visited = new HashSet<>(); // instead of node.visited
@@ -125,15 +157,15 @@ public class Graph {
         q.add(vertices.get(0));
         
         while (!q.isEmpty()) {
-            ctr++;
             Vertex v = q.remove();
-            System.out.print(v.value + " ");
             if (visited.contains(v)) {
                 continue;
             }
+            System.out.print(v.value + " ");
             visited.add(v);
+            ctr++;
             if (v.value == val) {
-                System.out.println();
+                System.out.println(true);
                 System.out.println("Vertices traversed: " + ctr);
                 return true;
             } else {
@@ -142,6 +174,7 @@ public class Graph {
                 }
             }
         }
+        System.out.println(false);
         return false;
     }
     
