@@ -28,12 +28,17 @@ public class MergeSort extends AbstractSort {
     }
     
     public void sort(int[] arr, int left, int right) {
+        // don't do anything if list length is 1
+        // or if left and right crossed somehow (although
+        // i'm not sure how that would really happen).
+        if (left >= right){
+            return;
+        }
+        
         // split the array in half recursively
         int middle = (left + right + 1) / 2;
-        if (left < right) {
-            sort(arr, left, middle-1);
-            sort(arr, middle, right);
-        }
+        sort(arr, left, middle-1);
+        sort(arr, middle, right);
         
         // merge after recursion finishes
         
