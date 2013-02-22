@@ -5,6 +5,7 @@
 package org.kprager.datastructures.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,11 +22,19 @@ public class Graph {
     
     // used to generate graph - his is handy because you can generate
     // the same graph over and over again for testing purposes.
-    private int[][] adjacency_list = {
+    private int[][] adjacency_list2 = {
             {0, 1},
             {1,0,2,3},
             {2,1,3},
             {3,1,2}
+        };
+    private int[][] adjacency_list = {
+            {0, 1},
+            {1,0,2,3},
+            {2,1,3,4},
+            {3,1,2,5},
+            {4,2,5},
+            {5,4,3}
         };
     private List<Vertex> vertices = new ArrayList<>();
     
@@ -48,6 +57,7 @@ public class Graph {
             boolean b = graph.isDAG(v);
             System.out.println(b);
         }
+        graph.dijsktra(vertices.get(0), vertices.get(3));
     }
     
     
@@ -204,6 +214,81 @@ public class Graph {
         }
         
         return true;
+    }
+    
+    
+    public void dijsktra(Vertex start, Vertex end) {
+        
+        // initialize our queue.  this is for an adjacency list representation
+        // of a graph, not a graph with weighted edges like Dijkstra's algorithm
+        // normally assumes.  For this reason we are using a standard queue
+        // instead of minimum priority queue.  We don't care which neighbor we
+        // visit next because they all have an edge weight of 1 (in essence).
+        Queue<Vertex> q = new LinkedList<>();
+        q.add(start);
+        // initialize single source
+        for (Vertex v: vertices) {
+            v.distance = Integer.MAX_VALUE;
+            v.parent = null;
+        }
+        start.distance = 0;
+        
+        // begin
+        Vertex curr;
+        while ((curr = q.poll()) != null) {
+            curr.visited = true;
+            System.out.println("curr: " + curr + " " + curr.distance + " " + curr.visited);
+           
+           // relax the neighbors:  bring them cookies.
+           for (Vertex v : curr.neighbors) {
+               
+               // we don't want to visit any neighbors we've already added
+               // to the queue
+               if (v.visited) {continue;}
+               
+               // add the non-visited neighbor to our queue
+               q.add(v);
+               
+               // calculate distance to origin by traversing parents of vertex.
+               // if the vertex has no parent, it's distance is not changed.
+               int distance = v.distance;
+               if (v.parent != null) {
+                    int ctr = 0;
+                    Vertex tmp = v;
+                    while (tmp.parent != null) {
+                        ctr++;
+                        tmp = tmp.parent;
+                    }
+                    distance = ctr;
+               }
+               
+               // update the distance to each neighbor
+               System.out.println(v + " " + distance + " " + v.visited);
+               if (distance > curr.distance && curr != v) {
+                   v.distance = curr.distance+1;
+                   v.parent = curr;
+               }
+           }
+           System.out.println();
+        }
+        for (Vertex v: vertices) {
+            System.out.println(v);
+        }
+        
+        // create shortest path list by traversing parents of 'end' until
+        // we hit 'start'
+        List<Vertex> shortest_path = new LinkedList<>();
+        shortest_path.add(end);
+        while (end.parent != null) {
+            shortest_path.add(end.parent);
+            end = end.parent;
+        }
+        // reverse the list becuase we added vertices in reverse order
+        System.out.println("SHORTEST PATH: ");
+        Collections.reverse(shortest_path);
+        for (Vertex v : shortest_path) {
+            System.out.println(v);
+        }
     }
 
     
