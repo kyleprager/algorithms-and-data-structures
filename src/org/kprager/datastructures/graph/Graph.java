@@ -20,25 +20,26 @@ import java.util.Stack;
  */
 public class Graph {
     
-    // used to generate graph - his is handy because you can generate
+    // used to generate graph - this is handy because you can generate
     // the same graph over and over again for testing purposes.
     private int[][] adjacency_list2 = {
-            {0, 1},
-            {1,0,2,3},
-            {2,1,3},
-            {3,1,2}
+            {1},
+            {0,2,3},
+            {1,3},
+            {1,2}
         };
     private int[][] adjacency_list = {
-            {0, 1},
-            {1,0,2,3},
-            {2,1,3,4},
-            {3,1,2,5},
-            {4,2,5},
-            {5,4,3}
+            {1},
+            {0,2,3},
+            {1,3,4},
+            {1,2,5},
+            {2,5},
+            {4,3}
         };
     private List<Vertex> vertices = new ArrayList<>();
     
     // the following are used if we want to generate our graph randomly
+    // NOTE: graph may not be connnected.  no euler tour.
     private static final int MAX_VERTICES = 100;
     private static final int MAX_NEIGHBORS = 10;
     private static final int MIN_NEIGHBORS = 0;
@@ -57,7 +58,7 @@ public class Graph {
             boolean b = graph.isDAG(v);
             System.out.println(b);
         }
-        graph.dijsktra(vertices.get(0), vertices.get(3));
+        graph.dijsktra(vertices.get(0));
     }
     
     
@@ -68,11 +69,16 @@ public class Graph {
      */
     public Graph() {
         // generate the graph
-        generateGraph();
+        generateGraph(adjacency_list2);
         
     }
     
-    private void generateGraph() {
+    public Graph(int[][] adjacency_list) {
+        // generate the graph
+        generateGraph(adjacency_list);
+    }
+    
+    private void generateGraph(int[][] adjacency_list) {
         // create all the vertices
         for (int i = 0; i < adjacency_list.length; i++) {
             vertices.add(new Vertex(i));
@@ -148,8 +154,11 @@ public class Graph {
                 System.out.println("Vertices traversed: " + ctr);
                 return true;
             } else {
-                for (Vertex tmp: v.neighbors) {
-                    stack.push(tmp);
+                // add children in reverse order so they are popped off the
+                // stack in the correct order
+                Vertex tmp;
+                for (int i = v.neighbors.size() - 1; i >= 0; i--) {
+                    stack.push(v.neighbors.get(i));
                 }
             }
         }
@@ -216,8 +225,13 @@ public class Graph {
         return true;
     }
     
-    
-    public void dijsktra(Vertex start, Vertex end) {
+    /**
+     * 
+     * @param start
+     * @param end
+     * @return 
+     */
+    public List<Vertex> dijsktra(Vertex start) {
         
         // initialize our queue.  this is for an adjacency list representation
         // of a graph, not a graph with weighted edges like Dijkstra's algorithm
@@ -230,6 +244,7 @@ public class Graph {
         for (Vertex v: vertices) {
             v.distance = Integer.MAX_VALUE;
             v.parent = null;
+            v.visited = false;
         }
         start.distance = 0;
         
@@ -275,6 +290,10 @@ public class Graph {
             System.out.println(v);
         }
         
+        return vertices;
+    }
+    
+    public List<Vertex> getShortestPath(Vertex end) {
         // create shortest path list by traversing parents of 'end' until
         // we hit 'start'
         List<Vertex> shortest_path = new LinkedList<>();
@@ -284,11 +303,13 @@ public class Graph {
             end = end.parent;
         }
         // reverse the list becuase we added vertices in reverse order
-        System.out.println("SHORTEST PATH: ");
         Collections.reverse(shortest_path);
+        
+        System.out.println("SHORTEST PATH: ");
         for (Vertex v : shortest_path) {
             System.out.println(v);
         }
+        return shortest_path;
     }
 
     
