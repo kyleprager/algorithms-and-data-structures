@@ -17,9 +17,24 @@ import org.kprager.datastructures.tree.Tree;
 public class Questions {
     
     public static void main(String[] args) {
+        for (int i = 0; i < 8; i++) {
+            Integer x = Questions.popcount(i);
+            System.out.print(x + " ");
+            System.out.println(Integer.bitCount(x));
+        }
         int[] arr = {9,2,5,6,3,7,1,0,8,4};
         Questions.twoLargestBST(new Tree(arr));
         Questions.createTreeFromTraversals();
+    }
+    
+    // count set bits
+    public static int popcount(int n) {
+        int count = 0;
+        while (n != 0) {
+          n = n & (n-1) ;
+          count++;
+        }
+        return count;
     }
     
     /**

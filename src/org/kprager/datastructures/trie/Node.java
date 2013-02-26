@@ -4,7 +4,7 @@
  */
 package org.kprager.datastructures.trie;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +12,11 @@ import java.util.List;
  * @author kyleprager
  */
 public class Node{
-    public List<Node> children = new LinkedList<>();
+    // I wanted to use a dynamic array instead of a linked list so that lookups
+    // are done more quickly in contiguous memory while searching a built Trie.
+    // The downside is that during construction of the Trie the array list of children
+    // might have to be dynamically resized.
+    public List<Node> children = new ArrayList<>();
     public boolean marker;
     public char value;
     
