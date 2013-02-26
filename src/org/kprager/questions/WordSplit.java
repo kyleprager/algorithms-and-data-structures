@@ -19,10 +19,11 @@ public class WordSplit {
     private static Set<String> dict = Dictionary.getDictionary();
     
     public static void main(String[] args) {
-        List<List<String>> matches = WordSplit.getMatches("peanutbutter");
-        for (List<String> match : matches) {
-            System.out.println(match);
-        }
+        WordSplit.printSplit("peanutbutter");
+        WordSplit.printSplit("teatime");
+        WordSplit.printSplit("forwhomthebelltolls");
+        WordSplit.printSplit("flyinghome");
+        WordSplit.printSplit("butterrible");
     }
     
     private static void split(String s, Node curr) {
@@ -72,6 +73,7 @@ public class WordSplit {
      * string can be split into.
      */
     public static List<List<String>> getMatches(String s) {
+        s = s.toLowerCase(); // we want this to work with our lower-case dictionary
         Node head = new Node(null);
         split(s, head);
         List<Node> ends = new LinkedList<>();
@@ -91,5 +93,13 @@ public class WordSplit {
             Collections.reverse(list);
         }
         return matches;
+    }
+    
+    public static void printSplit(String s) {
+        List<List<String>> matches = WordSplit.getMatches(s);
+        System.out.println("Matches for: " + s);
+        for (List<String> match : matches) {
+            System.out.println(match);
+        }
     }
 }
