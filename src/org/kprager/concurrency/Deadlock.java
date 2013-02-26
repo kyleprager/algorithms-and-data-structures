@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.kprager.algorithms;
+package org.kprager.concurrency;
 
 /**
  * I got this off of Oracle's site, but I've included it as a simple

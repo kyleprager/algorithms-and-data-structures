@@ -11,6 +11,7 @@ package org.kprager.datastructures.tree;
 public class Node{
     public Node left;
     public Node right;
+    public Node parent;
     public int value;
     public boolean visited;
     

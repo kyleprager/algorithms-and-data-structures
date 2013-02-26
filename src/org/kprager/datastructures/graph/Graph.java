@@ -36,6 +36,19 @@ public class Graph {
             {2,5},
             {4,3}
         };
+    private int[][] adjacency_list3 = {
+        {1},
+        {0,2},
+        {1,6,3},
+        {2,4,9},
+        {3,5},
+        {4},
+        {2,7,8},
+        {6,8},
+        {6,7,9},
+        {8,3,10},
+        {9}
+    };
     private List<Vertex> vertices = new ArrayList<>();
     
     // the following are used if we want to generate our graph randomly
@@ -59,6 +72,9 @@ public class Graph {
             System.out.println(b);
         }
         graph.dijsktra(vertices.get(0));
+        graph.getShortestPath(vertices.get(3));
+        graph.getShortestPath(vertices.get(10));
+        graph.getShortestPath(vertices.get(8));
     }
     
     
@@ -69,7 +85,7 @@ public class Graph {
      */
     public Graph() {
         // generate the graph
-        generateGraph(adjacency_list2);
+        generateGraph(adjacency_list3);
         
     }
     
@@ -293,6 +309,12 @@ public class Graph {
         return vertices;
     }
     
+    /**
+     * This function only works after calling Graph.dijkstra(start)
+     * @param end the destination vertex you are looking for
+     * @return a list that represents the shortest path of vertices to take
+     * to get to the given vertex from the start vertex passed to the Dijkstra function
+     */
     public List<Vertex> getShortestPath(Vertex end) {
         // create shortest path list by traversing parents of 'end' until
         // we hit 'start'

@@ -22,11 +22,10 @@ public class Tree {
         
         // Create tree
         Random r = new Random();
-        final int NUM_NODES = 10;
         System.out.print("Inserting: ");
         
-        int[] arr = {9,2,5,6,3,7,1,0,8,2};
-        for(int i = 0; i < NUM_NODES; i++) {
+        int[] arr = {9,2,5,6,3,7,1,0,8,4};
+        for(int i = 0; i < arr.length; i++) {
 //            tree.insert(r.nextInt(10));
             tree.insert(arr[i]);
         }
@@ -49,11 +48,16 @@ public class Tree {
         System.out.println(tree.isDAG());
     }
     
-    private Node head;
+    public Node head;
+    
+    public Tree() {}
+    public Tree(int[] insert_arr) {
+        for (int i = 0; i < insert_arr.length; i++) {
+            this.insert(insert_arr[i]);
+        }
+    }
     
     public void insert(int val) {
-        System.out.print(val + " ");
-        
         Node node = new Node(val);
         if (head == null) {
             head = node;
