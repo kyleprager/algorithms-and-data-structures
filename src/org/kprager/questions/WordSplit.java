@@ -26,7 +26,7 @@ public class WordSplit {
         WordSplit.printSplit("butterrible");
     }
     
-    private static void split(String s, Node curr) {
+    private static void split(String s, Node curr, List<Node> ends) {
         if (s == null || curr == null) {
             return;
         }
@@ -35,32 +35,13 @@ public class WordSplit {
             // check if left-hand-side (LHS) is a word
             if (dict.contains(s.substring(0, i+1))) {
                 Node n = new Node(s.substring(0, i+1));
+                n.parent = curr;
                 curr.children.add(n);
                 if (i+1 < s.length()) { // recur to the right if we have a RHS
-                    split(s.substring(i+1), n);
+                    split(s.substring(i+1), n, ends);
                 } else { // otherwise the whole word matched, so mark it as ended
                     n.end = true;
-                }
-            }
-        }
-    }
-    
-    /**
-     * 
-     * @param curr current node we're traversing
-     * @param ends list of words we are creating by traversing parent nodes
-     */
-    private static void BFS(Node curr, List<Node> ends) {
-        if (curr == null || ends == null) {
-            return;
-        }
-        if (curr.end) {
-            ends.add(curr);
-        } else {
-            for (Node n : curr.children) {
-                if (n != null) {
-                    n.parent = curr;
-                    BFS(n, ends);
+                    ends.add(n);
                 }
             }
         }
@@ -75,9 +56,8 @@ public class WordSplit {
     public static List<List<String>> getMatches(String s) {
         s = s.toLowerCase(); // we want this to work with our lower-case dictionary
         Node head = new Node(null);
-        split(s, head);
         List<Node> ends = new LinkedList<>();
-        BFS(head, ends);
+        split(s, head, ends);
         List<List<String>> matches = new LinkedList<>();
         for (Node n : ends) {
             List<String> list = new LinkedList<>();
