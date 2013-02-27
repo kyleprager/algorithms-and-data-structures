@@ -10,20 +10,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.TreeSet;
 
 /**
- *
+ * This dictionary is created using the Enable1 dictionary Words With Friends uses.
+ * This class is also a Singleton.
  * @author kprager
  */
 public class Dictionary {
+    private static final Dictionary singleton_dictionary = new Dictionary();
     private static Set<String> dictionary;
+    
+    private Dictionary() {
+    }
 
-    public static Set<String> getDictionary() {
+    /**
+     * Get a copy of the Dictionary singleton
+     * @return Returns the singleton copy of the Dictionary class.
+     */
+    public static Dictionary getDictionary() {
         if (dictionary != null) {
-            return dictionary;
+            return singleton_dictionary;
         }
-        ConcurrentSkipListSet<String> myDictionary = new ConcurrentSkipListSet<String>();
+        Set<String> myDictionary = new TreeSet<>();
         InputStream is = Dictionary.class.getClassLoader().getResourceAsStream("enable1.txt");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
@@ -37,7 +46,16 @@ public class Dictionary {
             throw new RuntimeException("uh oh, our dictionary didn't load!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111", ex);
         }
         dictionary = myDictionary;
-        return myDictionary;
+        return singleton_dictionary;
+    }
+    
+    /**
+     * Check to see if the dictionary contains a given word.
+     * @param s String to search for
+     * @return Returns true if the word was found, false otherwise.
+     */
+    public boolean contains(String s) {
+        return dictionary.contains(s);
     }
 
 }

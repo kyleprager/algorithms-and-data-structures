@@ -9,23 +9,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * Very simple array based implementation of a HashTable. Collisions are handled with buckets.
  * @author kyleprager
  */
 public class HashTbl<T> {
     
     public static void main(String[] args) {
-        HashTbl ht = new HashTbl();
+        HashTbl<Integer> ht = new HashTbl();
         int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,100,101,102,103,104,105,106};
         for (int x : arr) {
             ht.add(x);
-            System.out.println(ht.get(x));
+            int tmp = ht.get(x);
+            System.out.println(tmp);
         }
         ht.print();
+        for (int x : arr) {
+            boolean b = ht.remove(x);
+            System.out.println(b);
+        }
     }
     
     
-    private int size = 10;
+    private int size = 11;
     private List<LinkedList<T>> list;
     
     public HashTbl() {
@@ -39,17 +44,7 @@ public class HashTbl<T> {
             this.size = size;
         }
         list = new ArrayList<>(size);
-        System.out.println(list);
     }
-    
-//    public boolean setSize(int x) {
-//        if (x < size) {
-//            return false;
-//        } else {
-//            size = x;
-//            return true;
-//        }
-//    }
     
     public void add(T x) {
         int hash = hash(x);
@@ -83,6 +78,8 @@ public class HashTbl<T> {
     }
     
     private void print() {
-        System.out.println(list);
+        for (List<T> bucket : list) {
+            System.out.println(bucket);
+        }
     }
 }

@@ -7,7 +7,6 @@ package org.kprager.questions;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Given a string, ex: "peanutbutter", split it into all possible lists of subwords.
@@ -16,14 +15,12 @@ import java.util.Set;
  */
 public class WordSplit {
     
-    private static Set<String> dict = Dictionary.getDictionary();
+    private static Dictionary dict = Dictionary.getDictionary();
     
     public static void main(String[] args) {
+//        WordSplit.printSplit("peanutbutter");
+//        WordSplit.printSplit("thisisjusttestingthefunctiontosplitupwords");
         WordSplit.printSplit("peanutbutter");
-        WordSplit.printSplit("teatime");
-        WordSplit.printSplit("forwhomthebelltolls");
-        WordSplit.printSplit("flyinghome");
-        WordSplit.printSplit("butterrible");
     }
     
     private static void split(String s, Node curr, List<Node> ends) {
