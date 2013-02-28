@@ -24,13 +24,18 @@
 package org.kprager.algorithms;
 
 /**
- *
+ * This is adapted from the CLRS Introduction to Algorithms book.  Even the array
+ * I'm using is from their Heapsort example.
  * @author Kyle Prager (http://github.com/kyleprager)
  */
 public class HeapSort extends AbstractSort {
     
     public static void main(String[] args) {
-        int[] arr = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+        
+//        int[] arr = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+//        int[] arr = {20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,100,200,300,400,500};
+        int[] arr = {18,3,7,2};
+        
         HeapSort heapsorter = new HeapSort();
         heapsorter.sort(arr);
         Utils.print(arr);
@@ -54,10 +59,10 @@ public class HeapSort extends AbstractSort {
     }
     
     private void heapify(int[] arr, int i) {
-        int left = i*2;
-        int right = i*2+1;
+//        int parent = (int)Math.floor((i-1f)/2); // parent = (i-1)/2 since we are zero indexed.
+        int left = i*2; // because we are zero indexed we add 1 to the left child index
+        int right = i*2+1;// because we are zero indexed we add 1 to the right child index
         int idx = i;
-        
         if (i >= arr.length || left >= arr.length || right >= arr.length) {
             return;
         }

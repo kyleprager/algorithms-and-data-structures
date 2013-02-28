@@ -12,31 +12,31 @@ import java.util.List;
  * Very simple array based implementation of a HashTable. Collisions are handled with buckets.
  * @author kyleprager
  */
-public class HashTbl<T> {
+public class HashTbl<K, V> {
     
     public static void main(String[] args) {
-        HashTbl<Integer> ht = new HashTbl();
+        HashTbl<Integer, Integer> ht = new HashTbl<>();
         int[] arr = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,100,101,102,103,104,105,106};
         for (int x : arr) {
-            ht.add(x);
+            ht.add(x,x);
             int tmp = ht.get(x);
             System.out.println(tmp);
         }
-        ht.print();
+        System.out.println(ht);
         for (int x : arr) {
-            boolean b = ht.remove(x);
-            System.out.println(b);
+            ht.remove(x);
         }
+        System.out.println(ht);
     }
     
     
     private int size = 11;
-    private List<LinkedList<T>> list;
+    private List<List<HashEntry<K,V>>> list;
     
     public HashTbl() {
         list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            list.add(new LinkedList<T>());
+            list.add(new LinkedList<HashEntry<K,V>>());
         }
     }
     public HashTbl(int size) {
@@ -46,40 +46,52 @@ public class HashTbl<T> {
         list = new ArrayList<>(size);
     }
     
-    public void add(T x) {
-        int hash = hash(x);
-        list.get(hash).add(x);
+    public void add(K key, V value) {
+        int hash = key.hashCode() % size;
+        list.get(hash).add(new HashEntry<K,V>(key, value));
     }
     
-    public T get(T x) {
-        int hash = hash(x);
-        List<T> bucket = list.get(hash);
+    public V get(K key) {
+        int hash = key.hashCode() % size;
+        List<HashEntry<K,V>> bucket = list.get(hash);
         if (bucket != null) {
-            for(T tmp : bucket) {
-                if (tmp.equals(x)) {
-                    return tmp;
+            for(HashEntry<K,V> tmp : bucket) {
+                if (tmp.key.equals(key)) {
+                    return tmp.value;
                 }
             }
         }
         return null;
     }
     
-    public boolean remove(T x) {
-        int hash = hash(x);
-        List<T> bucket = list.get(hash);
-        if (bucket != null) {
-            return bucket.remove(x);
+    public void remove(K key) {
+        boolean retval = false;
+        int hash = key.hashCode() % size;
+        List<HashEntry<K,V>> bucket = list.get(hash);
+        bucket.clear();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (List<HashEntry<K,V>> bucket : list) {
+            sb.append(bucket);
+            sb.append("\n");
         }
-        return false;
+        return sb.toString();
     }
     
-    private int hash(T x) {
-        return x.hashCode() % size;
-    }
-    
-    private void print() {
-        for (List<T> bucket : list) {
-            System.out.println(bucket);
+    public static class HashEntry<K,V> {
+        public K key;
+        public V value;
+        public HashEntry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+        
+        @Override
+        public String toString() {
+            return "<" + key.toString() + "," + value.toString() + ">";
         }
     }
 }
