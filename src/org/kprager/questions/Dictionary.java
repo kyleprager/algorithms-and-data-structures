@@ -9,8 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Set;
-import java.util.TreeSet;
+import org.kprager.datastructures.trie.Trie;
 
 /**
  * This dictionary is created using the Enable1 dictionary Words With Friends uses.
@@ -19,7 +18,7 @@ import java.util.TreeSet;
  */
 public class Dictionary {
     private static final Dictionary singleton_dictionary = new Dictionary();
-    private static Set<String> dictionary;
+    private static Trie trie;
     
     private Dictionary() {
     }
@@ -29,10 +28,11 @@ public class Dictionary {
      * @return Returns the singleton copy of the Dictionary class.
      */
     public static Dictionary getDictionary() {
-        if (dictionary != null) {
+        if (trie != null) {
             return singleton_dictionary;
         }
-        Set<String> myDictionary = new TreeSet<>();
+        long millis = System.currentTimeMillis();
+        trie = new Trie();
         InputStream is = Dictionary.class.getClassLoader().getResourceAsStream("enable1.txt");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
@@ -40,12 +40,12 @@ public class Dictionary {
         String word;
         try {
             while ((word = br.readLine()) != null) {
-                myDictionary.add(word);
+                trie.insert(word);
             }
         } catch (IOException ex) {
             throw new RuntimeException("uh oh, our dictionary didn't load!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111", ex);
         }
-        dictionary = myDictionary;
+        System.out.println((System.currentTimeMillis() - millis) / 1000f);
         return singleton_dictionary;
     }
     
@@ -55,7 +55,7 @@ public class Dictionary {
      * @return Returns true if the word was found, false otherwise.
      */
     public boolean contains(String s) {
-        return dictionary.contains(s);
+        return trie.search(s);
     }
 
 }
