@@ -18,9 +18,9 @@ public class WordSplit {
     private static Dictionary dict = Dictionary.getDictionary();
     
     public static void main(String[] args) {
-//        WordSplit.printSplit("peanutbutter");
-//        WordSplit.printSplit("thisisjusttestingthefunctiontosplitupwords");
+        WordSplit.printSplit("thisisjusttestingthefunctiontosplitupwords");
         WordSplit.printSplit("peanutbutter");
+        WordSplit.printSplit("presidentobama");
     }
     
     private static void split(String s, Node curr, List<Node> ends) {
@@ -74,6 +74,10 @@ public class WordSplit {
     
     public static void printSplit(String s) {
         List<List<String>> matches = WordSplit.getMatches(s);
+        if (matches.isEmpty()) {
+            System.out.println("No matches for: " + s);
+            return;
+        }
         System.out.println("Matches for: " + s);
         for (List<String> match : matches) {
             System.out.println(match);

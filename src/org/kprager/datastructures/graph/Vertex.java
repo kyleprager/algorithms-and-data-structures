@@ -35,7 +35,12 @@ public class Vertex implements Comparable {
     @Override
     public int compareTo(Object o) {
         Vertex v = (Vertex)o;
-        
-        return v.distance - this.distance;
+        if (v.distance > this.distance) {
+            return -1;
+        } else if (v.distance > this.distance) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

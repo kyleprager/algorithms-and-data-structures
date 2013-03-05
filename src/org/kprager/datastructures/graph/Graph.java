@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -255,7 +256,7 @@ public class Graph {
         // instead of minimum priority queue.  We don't care which neighbor we
         // visit next because they all have an edge weight of 1 (in essence).
         Queue<Vertex> q = new LinkedList<>();
-        q.add(start);
+        q.addAll(vertices);
         // initialize single source
         for (Vertex v: vertices) {
             v.distance = Integer.MAX_VALUE;
@@ -267,40 +268,17 @@ public class Graph {
         // begin
         Vertex curr;
         while ((curr = q.poll()) != null) {
-            curr.visited = true;
             System.out.println("curr: " + curr + " " + curr.distance + " " + curr.visited);
            
            // relax the neighbors:  bring them cookies.
            for (Vertex v : curr.neighbors) {
-               
-               // we don't want to visit any neighbors we've already added
-               // to the queue
-               if (v.visited) {continue;}
-               
-               // add the non-visited neighbor to our queue
-               q.add(v);
-               
-               // calculate distance to origin by traversing parents of vertex.
-               // if the vertex has no parent, it's distance is not changed.
-               int distance = v.distance;
-               if (v.parent != null) {
-                    int ctr = 0;
-                    Vertex tmp = v;
-                    while (tmp.parent != null) {
-                        ctr++;
-                        tmp = tmp.parent;
-                    }
-                    distance = ctr;
-               }
-               
-               // update the distance to each neighbor
-               System.out.println(v + " " + distance + " " + v.visited);
-               if (distance > curr.distance && curr != v) {
-                   v.distance = curr.distance+1;
+               if (v.distance > (curr.distance+1) && v != curr) {
                    v.parent = curr;
+                   v.distance = curr.distance+1;
                }
            }
-           System.out.println();
+           
+           
         }
         for (Vertex v: vertices) {
             System.out.println(v);
