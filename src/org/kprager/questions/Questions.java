@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This code uses DataStructure I've personally written as practice examples to implement a few coding challenges.
  */
 package org.kprager.questions;
 
